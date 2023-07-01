@@ -7,12 +7,9 @@ fetch('http://localhost:5678/api/works')
     .then((projects) => {
 
 
-      for (let i=0; i < projects.length; i++) {
-          const project = projects[i];
-
-
-      
-
+for (let i=0; i < projects.length; i++) {
+        const project = projects[i];
+        
 
 // Récupération de l'élément du DOM qui accueillera les projets
   const sectionGallery = document.querySelector(".gallery");
@@ -34,12 +31,9 @@ sectionGallery.appendChild(projectElement);
 projectElement.appendChild(imageElement);
 projectElement.appendChild(titreElement);
 
-    }
-  }
-    )
+}})
 
-
-
+//**************************************/  CATEGORIES FILTRE /**************************************//
 // Récupération des catégories depuis l'API
 
 fetch('http://localhost:5678/api/categories')
@@ -47,38 +41,29 @@ fetch('http://localhost:5678/api/categories')
     .then((categories) => {
 
 
-      for (let i=0; i < categories.length; i++) {
-          const categorie = categories[i];
 
+// Récupération de l'élément du DOM qui accueillera les boutons
+const buttonContainer = document.querySelector(".btn-container");
 
-
-// Création d’une balise dédiée à une catégorie
-const categorieElement = document.createElement("p");
 
 //  Création des balises 
-const nameElement = document.createElement("button");
-nameElement.innerText = categorie.name;
 
-categorieElement.appendChild(nameElement);
-
-// gestion des boutons 
-const buttonFilter = document.querySelectorAll("button");
-
-
-buttonFilter.addEventListener("click", function () {
-  console.log("clicked");
-  const categoriesFiltered = categories.filter(function (categorie) {
-    return categorie.name == "Objets";
-
-    console.log(categoriesFiltered)
-
-
-  })}
-
-) 
-
-
-          }})
+const btnFilterAll = document.createElement("button");
+btnFilterAll.textContent = "Tous";
+const btnFilterObjects = document.createElement("button");
+btnFilterObjects.textContent = "Objets";
+const btnFilterAppartments = document.createElement("button");
+btnFilterAppartments.textContent = "Appartements";
+const btnFilterRestaurants = document.createElement("button");
+btnFilterRestaurants.textContent = "Hôtels & restaurants";
 
 
 
+
+buttonContainer.appendChild(btnFilterAll);
+buttonContainer.appendChild(btnFilterObjects);
+buttonContainer.appendChild(btnFilterAppartments);
+buttonContainer.appendChild(btnFilterRestaurants);
+
+
+    })
