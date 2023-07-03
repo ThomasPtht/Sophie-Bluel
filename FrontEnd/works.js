@@ -41,6 +41,7 @@ fetch('http://localhost:5678/api/categories')
     .then((categories) => {
 
 
+console.log(categories)
 
 // Récupération de l'élément du DOM qui accueillera les boutons
 const buttonContainer = document.querySelector(".btn-container");
@@ -65,5 +66,29 @@ buttonContainer.appendChild(btnFilterObjects);
 buttonContainer.appendChild(btnFilterAppartments);
 buttonContainer.appendChild(btnFilterRestaurants);
 
+ 
+   
+const categorieButton = [btnFilterAll.textContent, btnFilterObjects.textContent, btnFilterAppartments.textContent, btnFilterRestaurants.textContent];
+console.log(categorieButton)
 
-    })
+const buttonFilter = document.querySelectorAll("button");
+const imageElement = document.querySelector("img")
+
+
+
+function onButtonClick (event)  {
+  console.log (event.currentTarget)
+  }
+  
+
+buttonFilter.forEach(function(button) {
+  button.addEventListener("click", onButtonClick) 
+    console.log("clicked")
+    if (categorieButton === categories.name ) {
+      imageElement.style.display = "block";
+    } else {
+      imageElement.style.display = "none";
+    }
+
+})
+})
