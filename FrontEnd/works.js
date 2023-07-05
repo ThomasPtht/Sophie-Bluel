@@ -11,7 +11,6 @@ for (let i=0; i < projects.length; i++) {
         const project = projects[i];
    
         
-// New set afin de supprimer les doublons du array : 
 
 
 // Récupération de l'élément du DOM qui accueillera les projets
@@ -84,19 +83,19 @@ const blocFigure = document.querySelectorAll(".gallery figure")
 
 
 
-// Sélectionnez les éléments auxquels ajouter l'écouteur d'événement "click" :
+// Ajouter l'écouteur d'événement "click" à chaque bouton :
 buttonFilter.forEach(button => {
   button.addEventListener("click", function(event) {
     const categorieButton = event.currentTarget.textContent;
   console.log(categorieButton);
-// Effectuer le filtrage à l'intérieur de la fonction de rappel de l'écouteur d'évenement :
+// Filtrer les catégories en fonction du texte du bouton :
     const categoriesFiltered = categories.filter(function(categorie) {
       return categorie.name === categorieButton;
     });
     console.log(categoriesFiltered);
 
-    // OK JUSQU ICI
 
+// Afficher ou cacher les projets de la galerie selon le nom de la catégorie :  
     blocFigure.forEach(figure => {
       const dataCategory = figure.category.name
       console.log(dataCategory)
