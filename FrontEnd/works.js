@@ -5,13 +5,9 @@ fetch('http://localhost:5678/api/works')
     .then(reponse => reponse.json())
     .then((projects) => {
 
-const set = new Set (["Objets", "Appartements", "Hotels & restaurants"])
-
 for (let i=0; i < projects.length; i++) {
         const project = projects[i];
    
-        
-
 
 // Récupération de l'élément du DOM qui accueillera les projets
   const sectionGallery = document.querySelector(".gallery");
@@ -25,15 +21,23 @@ const imageElement = document.createElement("img");
 imageElement.src = project.imageUrl;
 const titreElement = document.createElement("figcaption");
 titreElement.innerText = project.title;
+const categoryName = document.createElement ("p")
+categoryName.innerText = project.category.name
+categoryName.style.display = "none"
+console.log(categoryName)
 
+// Ajout de la classe correspondant à la catégorie au projet
+const categoryClass = project.category.name.toLowerCase().replace(/\s+/g, '-');
+projectElement.classList.add(categoryClass);
 
 
 // On rattache les balises à la class .gallery
 sectionGallery.appendChild(projectElement);
 projectElement.appendChild(imageElement);
 projectElement.appendChild(titreElement);
+projectElement.appendChild(categoryName)
 
-}})
+}
 
 //**************************************/  CATEGORIES FILTRE /**************************************//
 // Récupération des catégories depuis l'API
@@ -47,6 +51,8 @@ console.log(categories)
 
 // Récupération de l'élément du DOM qui accueillera les boutons
 const buttonContainer = document.querySelector(".btn-container");
+
+
 
 
 //  Création des balises 
@@ -79,7 +85,6 @@ console.log(categorieButton)
 
 // Déclaration d'éléments
 const buttonFilter = document.querySelectorAll("button");
-const blocFigure = document.querySelectorAll(".gallery figure")
 
 
 
@@ -88,26 +93,33 @@ buttonFilter.forEach(button => {
   button.addEventListener("click", function(event) {
     const categorieButton = event.currentTarget.textContent;
   console.log(categorieButton);
+
 // Filtrer les catégories en fonction du texte du bouton :
-    const categoriesFiltered = categories.filter(function(categorie) {
-      return categorie.name === categorieButton;
+    const categoriesFiltered = projects.filter(function(project) {
+      return project.category.name === categorieButton;
     });
-    console.log(categoriesFiltered);
 
 
-// Afficher ou cacher les projets de la galerie selon le nom de la catégorie :  
-    blocFigure.forEach(figure => {
-      const dataCategory = figure.category.name
-      console.log(dataCategory)
+   
+   
+   // Masquer ou afficher les projets en fonction des catégories filtrées
+   const blocFigure = document.querySelectorAll("figure");
+   if (categorieButton === "Tous") {
+     blocFigure.forEach(figure => {
+       figure.style.display = "block";
+     });
+   } else {
+     blocFigure.forEach(figure => {
+       const categorieNameFigure = figure.classList;
+       if (categoriesFiltered.some(category => categorieNameFigure.contains(category.category.name.toLowerCase().replace(/\s+/g, '-')))) {
+         figure.style.display = "block";
+       } else {
+         figure.style.display = "none";
 
-      if (dataCategory) {
-        if (categoriesFiltered.includes(dataCategory)) {
-          figure.style.display = "block";
-        } else {
-          figure.style.display = "none";
-        }
-      }
-    });
+    }
+  })
+}})
+    })
+  })
 })
-})
-})
+    
