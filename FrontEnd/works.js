@@ -53,8 +53,6 @@ console.log(categories)
 const buttonContainer = document.querySelector(".btn-container");
 
 
-
-
 //  Création des balises 
 
 const btnFilterAll = document.createElement("button");
@@ -99,8 +97,6 @@ buttonFilter.forEach(button => {
       return project.category.name === categorieButton;
     });
 
-
-   
    
    // Masquer ou afficher les projets en fonction des catégories filtrées
    const blocFigure = document.querySelectorAll("figure");
