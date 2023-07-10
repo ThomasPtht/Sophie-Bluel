@@ -18,6 +18,7 @@ const submitButton = document.getElementById("submit");
 // Ajouter un gestionnaire d'événement au clic sur le bouton "submit"
 submitButton.addEventListener("click", handleFormSubmit);
 
+
 fetch('http://localhost:5678/api/users/login', {
 method : "POST",
 headers: {
@@ -29,12 +30,23 @@ body : JSON.stringify ({
     
 })
 })
-.then(response => response.json())
+.then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Erreur dans l’identifiant ou le mot de passe');
+    }
+  })
 .then(data => {
   const token = data.token; // Récupérer le token depuis la réponse de l'API
-  
+
   // Stocker le token dans le localStorage 
   localStorage.setItem('token', token);
+
+
+
+  // Rediriger vers la page d'accueil
+  window.location.href = "index.html";
 })
 
 .catch(error => {
@@ -44,7 +56,7 @@ body : JSON.stringify ({
 const getToken = localStorage.getItem('token');
 fetch('http://localhost:5678/api/users/login', {
   headers: {
-    'Authorization': `Bearer ${token}`
+    'Authorization': `Bearer ${getToken}`
   }
 })
 .then(response => {
@@ -52,5 +64,6 @@ fetch('http://localhost:5678/api/users/login', {
 })
 .catch(error => {
   console.error('Erreur lors de la récupération des données :', error);
+
 });
 }
