@@ -5,6 +5,8 @@ fetch('http://localhost:5678/api/works')
     .then(reponse => reponse.json())
     .then((projects) => {
 
+
+
 for (let i=0; i < projects.length; i++) {
         const project = projects[i];
    
@@ -118,4 +120,50 @@ buttonFilter.forEach(button => {
     })
   })
 })
+
+
+/////// Affichage du mode éditeur ///////
     
+// Récupérer le lien de connexion sur la page index.html
+const loginLink= document.getElementById ("login-link")
+
+const editionBar = document.getElementsByClassName ("edition-bar")[0]
+const editMode = document.getElementById ("edit-1")
+const editProjects = document.getElementById ("edit-2")
+
+// Fonction pour vérifier si un token est présent dans le local storage
+function getToken() {
+return localStorage.getItem('token')
+}
+
+// Mettre à jour le bouton de connexion en fonction de la présence du token
+function updateLoginButton () {
+if (getToken()) {
+ 
+    loginLink.innerText = "logout";
+    editionBar.style.display = "flex";
+    editMode.style.display = "flex";
+    editProjects.style.display = "flex";
+
+} else {
+    loginLink.innerText = "login";
+    editionBar.style.display = "none";
+    editMode.style.display = "none";
+    editProjects.style.display = "none";
+}
+}
+
+// Gestionnaire d'événement pour le clic sur le bouton de connexion
+loginLink.addEventListener("click", handleLoginButtonClick);
+
+// Fonction à exécuter lors du clic sur le bouton de connexion pour logout
+function handleLoginButtonClick() {
+    if (getToken()) {
+        // Supprimer le token du local storage
+        localStorage.removeItem('token');
+        updateLoginButton(); // Mettre à jour le bouton après la suppression du token
+    }
+}
+// Appeler la fonction pour mettre à jour le bouton de connexion lors du chargement initial de la page
+window.addEventListener("DOMContentLoaded", updateLoginButton);
+
