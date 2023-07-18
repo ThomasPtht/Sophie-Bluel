@@ -7,7 +7,10 @@ fetch('http://localhost:5678/api/works')
 
 
 
+
 for (let i=0; i < projects.length; i++) {
+
+// Création de la const pour un projet
         const project = projects[i];
    
 
@@ -122,7 +125,9 @@ buttonFilter.forEach(button => {
 })
 
 
-/////// Affichage du mode éditeur ///////
+
+
+/////// ******** Affichage du mode éditeur ********* ///////
     
 // Récupérer le lien de connexion sur la page index.html
 const loginLink= document.getElementById ("login-link")
@@ -153,17 +158,24 @@ if (getToken()) {
 }
 }
 
+
 // Gestionnaire d'événement pour le clic sur le bouton de connexion
 loginLink.addEventListener("click", handleLoginButtonClick);
 
 // Fonction à exécuter lors du clic sur le bouton de connexion pour logout
 function handleLoginButtonClick() {
+ 
     if (getToken()) {
+
+      // Rester sur la page index et éviter la redirection vers la page login :
+      event.preventDefault();
+
         // Supprimer le token du local storage
         localStorage.removeItem('token');
         updateLoginButton(); // Mettre à jour le bouton après la suppression du token
-    }
-}
+       
+        
+    }}
 // Appeler la fonction pour mettre à jour le bouton de connexion lors du chargement initial de la page
 window.addEventListener("DOMContentLoaded", updateLoginButton);
-
+  

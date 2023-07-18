@@ -380,10 +380,10 @@ footer nav ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   background-color: black;
   color: white;
   height: 60px;
+  width: 100%; /* Ajout de cette règle */
 }
 
 .edition-bar p {
@@ -448,8 +448,54 @@ footer nav ul {
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
+  padding: 50px 70px 20px 70px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
+  height: 70%;
   border-radius: 15px;
+}
+
+.modal-content h2 {
+  font-family: "Work Sans";
+  color: black;
+  padding-bottom: 20px;
+}
+
+#modal-works {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 2px;
+  grid-row-gap: 20px;
+}
+
+.modal-content button {
+  text-align: center;
+  background-color: #1d6154;
+  color: white;
+}
+
+.modal-content button:hover {
+  background-color: white;
+  color: #1d6154;
+}
+
+.modal-content p {
+  color: red;
+  text-align: center;
+  padding-top: 20px;
+}
+
+#modal-works img {
+  width: 80%;
+  height: 80%;
+}
+
+hr {
+  color: #b3b3b3;
+  width: 420px;
+  height: 0px;
+  border: 1px solid #b3b3b3;
+  position: absolute;
+  left: 510px;
+  top: 1229px;
 }

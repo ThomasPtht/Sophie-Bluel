@@ -9,10 +9,44 @@ const btn = document.getElementById("edit-2");
 // Récupérer le span qui ferme la modale : 
 const span = document.getElementsByClassName("close")[0];
 
+
+
 // Quand l'utilisateur clique sur le bouton, ouvre la modale
 btn.onclick = function() {
   modal.style.display = "block";
+
+// Récupération des travaux depuis l'API 
+fetch('http://localhost:5678/api/works')
+    .then(reponse => reponse.json())
+    .then((modalProjects) => {
+
+
+for (let i=0; i < modalProjects.length; i++) {
+
+// Création de la const pour un projet
+        const modalProject = modalProjects[i];
+
+// Récupération de l'élément du DOM qui accueillera les projets dans la modale
+const modalGallery = document.getElementById("modal-works");
+
+// Création d’une balise dédiée à un projet
+const modalProjectElement = document.createElement("figure");
+
+
+//  Création des balises 
+const imageElement = document.createElement("img");
+imageElement.src = modalProject.imageUrl;
+const editElement = document.createElement("figcaption");
+editElement.innerText = "éditer";
+
+
+
+// On rattache les balises à la class .myModal
+modalGallery.appendChild(modalProjectElement);
+modalProjectElement.appendChild(imageElement);
+modalProjectElement.appendChild(editElement);
 }
+})
 
 // Quand l'utilisateur clique sur <span> (x), ferme la modale
 span.onclick = function() {
@@ -24,9 +58,4 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
-
-// Récuperer mes projets dans la modale : 
-const modalProjects = works.js.queryselector("projects")
-
-projects = console.log(projects)
+}}
