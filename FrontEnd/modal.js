@@ -30,7 +30,9 @@ for (let i=0; i < modalProjects.length; i++) {
 const modalGallery = document.getElementById("modal-works");
 
 // Création d’une balise dédiée à un projet
+
 const modalProjectElement = document.createElement("figure");
+modalProjectElement.classList.add("#modal-work");
 
 
 //  Création des balises 
@@ -38,13 +40,25 @@ const imageElement = document.createElement("img");
 imageElement.src = modalProject.imageUrl;
 const editElement = document.createElement("figcaption");
 editElement.innerText = "éditer";
+const trashIcon = document.createElement ("i")
+trashIcon.classList.add("fa", "fa-trash-can", "trash-icon")
 
+// Création de l'élément d'icône de flèches
+// Vérification si c'est la première image
+if (i === 0) {
+const arrowIcon = document.createElement ("i")
+arrowIcon.classList.add("fa","fa-arrows-up-down-left-right", "arrow-icon")
+ // Ajout de l'icône de flèche à l'élément du projet
+modalProjectElement.appendChild(arrowIcon);
+}
 
-
-// On rattache les balises à la class .myModal
+// On rattache les balises à leur parent
 modalGallery.appendChild(modalProjectElement);
 modalProjectElement.appendChild(imageElement);
 modalProjectElement.appendChild(editElement);
+modalProjectElement.appendChild(trashIcon);
+
+
 }
 })
 

@@ -414,12 +414,14 @@ footer nav ul {
   display: flex;
   gap: 5px;
   padding-left: 55px;
+  cursor: pointer;
 }
 
 #edit-2 {
   display: flex;
   gap: 5px;
   padding-bottom: 30px;
+  cursor: pointer;
 }
 
 .edit-projects {
@@ -451,27 +453,36 @@ footer nav ul {
   padding: 50px 70px 20px 70px;
   border: 1px solid #888;
   width: 40%; /* Could be more or less, depending on screen size */
-  height: 70%;
+  height: 80%;
   border-radius: 15px;
+  position: relative;
 }
 
 .modal-content h2 {
   font-family: "Work Sans";
   color: black;
   padding-bottom: 20px;
+  font-weight: 400;
+  position: relative;
 }
 
 #modal-works {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-column-gap: 2px;
-  grid-row-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  padding-bottom: 40px;
+  position: relative;
 }
 
 .modal-content button {
+  display: block;
+  margin: 0 auto;
   text-align: center;
+  align-self: center;
   background-color: #1d6154;
   color: white;
+  margin-top: 40px;
 }
 
 .modal-content button:hover {
@@ -480,22 +491,54 @@ footer nav ul {
 }
 
 .modal-content p {
-  color: red;
+  color: #d65353;
+  font-weight: 400;
   text-align: center;
   padding-top: 20px;
+  font-family: "Syne";
 }
 
 #modal-works img {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: auto;
 }
 
-hr {
-  color: #b3b3b3;
-  width: 420px;
-  height: 0px;
-  border: 1px solid #b3b3b3;
+#modal-works figure {
+  position: relative;
+}
+
+.trash-icon {
   position: absolute;
-  left: 510px;
-  top: 1229px;
+  top: 7px;
+  right: 7px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  background-color: black;
+}
+
+.arrow-icon {
+  position: absolute;
+  top: 7px;
+  right: 33px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  background-color: black;
+}
+
+.spacer {
+  color: #b3b3b3;
+  width: 100%;
+  border: 1px solid #b3b3b3;
+}
+
+/* Positionnement de x pour fermer la modale */
+.close {
+  margin: 10px;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
