@@ -29,7 +29,7 @@ titreElement.innerText = project.title;
 const categoryName = document.createElement ("p")
 categoryName.innerText = project.category.name
 categoryName.style.display = "none"
-console.log(categoryName)
+
 
 // Ajout de la classe correspondant à la catégorie au projet
 const categoryClass = project.category.name.toLowerCase().replace(/\s+/g, '-');
@@ -51,8 +51,6 @@ fetch('http://localhost:5678/api/categories')
     .then(reponse => reponse.json())
     .then((categories) => {
 
-
-console.log(categories)
 
 // Récupération de l'élément du DOM qui accueillera les boutons
 const buttonContainer = document.querySelector(".btn-container");
@@ -84,7 +82,7 @@ buttonContainer.appendChild(btnFilterRestaurants);
 
 // Déclarer le texte du bouton en tant que catégorie bouton
 const categorieButton = [btnFilterAll.textContent, btnFilterObjects.textContent, btnFilterAppartments.textContent, btnFilterRestaurants.textContent];
-console.log(categorieButton)
+
 
 // Déclaration d'éléments
 const buttonFilter = document.querySelectorAll("button");
@@ -95,7 +93,7 @@ const buttonFilter = document.querySelectorAll("button");
 buttonFilter.forEach(button => {
   button.addEventListener("click", function(event) {
     const categorieButton = event.currentTarget.textContent;
-  console.log(categorieButton);
+  
 
 // Filtrer les catégories en fonction du texte du bouton :
     const categoriesFiltered = projects.filter(function(project) {

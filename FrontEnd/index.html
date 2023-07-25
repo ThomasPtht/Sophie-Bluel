@@ -81,8 +81,43 @@
             <h2>Galerie photo</h2>
             <div id="modal-works"></div>
             <div class="spacer"></div>
-            <button>Ajouter une photo</button>
+            <button class="add-button">Ajouter une photo</button>
             <p>Supprimer la galerie</p>
+          </div>
+        </div>
+
+        <!-- Modale ajout projet : -->
+        <div id="secondModal" class="modal-2">
+          <div class="modal-content-2">
+            <img
+              class="arrow-left"
+              src="./assets/icons/arrow-left.svg"
+              alt="arrow left icon"
+            />
+            <span class="close-modal">&times;</span>
+            <div class="add-project">
+              <h2>Ajout photo</h2>
+              <form class="my-form" action="">
+                <div class="image-input-container">
+                  <input id="image-input" type="file" />
+                  <img
+                    id="image-preview"
+                    src="./assets/icons/picture-svgrepo-com 1.svg"
+                    alt="close icon"
+                  />
+                  <button id="add-photo">+ Ajouter photo</button>
+                  <p>jpg, png : 4mo max</p>
+                </div>
+                <div class="form-group">
+                  <label for="text-input">Titre</label>
+                  <input id="text-input" type="text" />
+                  <label for="select">Catégorie</label>
+                  <select name="select" id="select"></select>
+                </div>
+                <div class="spacer-2"></div>
+                <button class="submit">Valider</button>
+              </form>
+            </div>
           </div>
         </div>
 
