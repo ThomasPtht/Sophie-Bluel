@@ -166,6 +166,7 @@ for (const category of categories) {
 // Créer une option pour chaque catégorie
 const optionElement = document.createElement("option");
 optionElement.textContent = category.name; 
+optionElement.value = category.name; // Associer la valeur de l'option à son nom
   
 // Ajouter l'option à l'élément select
 selectElement.appendChild(optionElement);
@@ -174,7 +175,14 @@ selectElement.appendChild(optionElement);
 .catch(error => {
       console.error('Erreur lors de la récupération des catégories :', error);
     });
-
+// Quand l'utilisateur sélectionne une option dans le menu déroulant
+selectElement.addEventListener("change", function(event) {
+  // Récupérer la valeur sélectionnée (nom de la catégorie)
+  const selectedCategory = event.target.value;
+  
+  // Associer la valeur sélectionnée à categorySelect
+  categorySelect = selectedCategory;
+});
 
 
   // Quand l'utilisateur clique sur <span> (x), ferme la modale
@@ -185,28 +193,16 @@ selectElement.appendChild(optionElement);
 
 
 
-const galleryElement = document.querySelector(".gallery")
+const galleryElement = document.querySelectorAll(".gallery")
 
   // Quand l'utilisateur clique sur le bouton ajouter une photo, ouvre la 2eme modale
 addButton.onclick = function() {
     secondModal.style.display = "block";
     modal.style.display = "none"
    
-   galleryElement.forEach(element => {
-      element.style.display = "block";
-    });
-
-// Récupérer tous les éléments avec la classe "objets", "appartements", etc.
-const allProjectElements = document.querySelectorAll(".objets, .appartements, .restaurants");
-
-// Parcourir tous les éléments et les mettre en "display: block"
-allProjectElements.forEach(element => {
-  element.style.display = "block";
-});
-}
 
 
-
+  }
 
  // Quand l'utilisateur clique sur la flèche de retour, ferme la modale et ouvre la première modale
  const arrowBack = document.getElementsByClassName("arrow-left")[0];
@@ -227,23 +223,19 @@ modalWorkElements.forEach(element => {
 
 
 //  Récupérer le bouton d'ajout de photo et l'input file
-const addPhoto = document.getElementById("add-photo")
+const addPhotoButton = document.getElementById("add-photo")
 const imageInput = document.getElementById("image-input");
 const imagePreview = document.getElementById("image-preview");
+const imageDescription = document.getElementById("image-description");
 
-addPhoto.addEventListener("click", function(event) {
+addPhotoButton.addEventListener("click", function(event) {
    // Arrêter la propagation de l'événement pour empêcher la fermeture de la modale
+   event.preventDefault();
    event.stopPropagation();
    // Ouvrir l'input file pour récupérer un fichier
    imageInput.click();
  
   });
-
-// Ajouter un événement "click" à la modale pour empêcher sa fermeture lorsque l'input file est ouvert
-secondModal.addEventListener("click", function(event) {
-    event.stopPropagation();
-});
-
 
   imageInput.addEventListener("change", function(event) {
     const selectedFile = event.target.files[0];
@@ -252,9 +244,72 @@ secondModal.addEventListener("click", function(event) {
     
         reader.onload = function() {
           imagePreview.src = reader.result;
+          imagePreview.style.display = "block"; // Afficher l'image prévisualisée
+          addPhotoButton.style.display = "none"; // Cacher le bouton d'ajout de photo
+          imageDescription.style.display = "none"; // Cacher le paragraphe de description
+            // Supprimer le padding-top de l'image prévisualisée
+           imagePreview.style.paddingTop = "0 !important";
+
         };
     
         reader.readAsDataURL(selectedFile);
       }
     })
+
+
+
+
+// AJOUT D UN PROJET :
+
+
+// Récupérer le formulaire
+const myForm = document.getElementsByClassName("my-form")[0]
+console.log(myForm)
+
+myForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  // Récupérer les données du formulaire
+  const imageUrl = document.getElementById("image-input").files[0]
+  const description = document.getElementById("text-input").value;
+  const categorySelect = document.getElementById("select").value;
+
+  console.log(imageUrl)
+  console.log(description)
+  console.log(categorySelect)
+
+// Créer l'objet FormData et ajouter les champs du formulaire
+const formData = new FormData();
+formData.append("imageUrl", imageUrl);
+formData.append("description", description);
+formData.append("category", categorySelect);
+
+
+  // Récupérer le token depuis le local storage
+  const token = localStorage.getItem("token");
   
+
+  fetch(`http://localhost:5678/api/works`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Ajouter le token dans l'en-tête de la requête
+    },
+    body: formData // Utiliser l'objet FormData comme corps de la requête
+  })
+  .then(response => {
+    console.log(response)
+    if (!response.ok) {
+      throw new Error('Erreur lors de l\'ajout du projet.');
+    }
+    return response.json(); // Si la réponse est valide, retourner les données JSON
+  })
+  .then(data => {
+    console.log('Projet ajouté avec succès:', data);
+    // Vous pouvez effectuer des actions supplémentaires ici si nécessaire
+  })
+  .catch(error => {
+    console.error('Erreur:', error.message);
+    // Gérer les erreurs ici si nécessaire
+  });
+});
