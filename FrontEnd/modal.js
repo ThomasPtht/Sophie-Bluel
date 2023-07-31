@@ -18,7 +18,7 @@ const token = window.localStorage.getItem('token');
 
 // Quand l'utilisateur clique sur <span> (x), ferme la modale
 span.onclick = function() {
-  modal.style.display = "none";
+  modal.style.display = "none"; 
 };
 
 // Quand l'utilisateur clique à l'extérieur de la modale, ferme la modale
@@ -118,8 +118,6 @@ btn.onclick = function() {
     });
 }
 
- 
-
 
 
 //****************/ Ajout nouveau projet *************//
@@ -166,7 +164,7 @@ for (const category of categories) {
 // Créer une option pour chaque catégorie
 const optionElement = document.createElement("option");
 optionElement.textContent = category.name; 
-optionElement.value = category.name; // Associer la valeur de l'option à son nom
+optionElement.value = category.id; // Associer l'ID de la catégorie à la valeur de l'option
   
 // Ajouter l'option à l'élément select
 selectElement.appendChild(optionElement);
@@ -177,11 +175,10 @@ selectElement.appendChild(optionElement);
     });
 // Quand l'utilisateur sélectionne une option dans le menu déroulant
 selectElement.addEventListener("change", function(event) {
-  // Récupérer la valeur sélectionnée (nom de la catégorie)
-  const selectedCategory = event.target.value;
-  
-  // Associer la valeur sélectionnée à categorySelect
-  categorySelect = selectedCategory;
+ // Récupérer la valeur sélectionnée (ID de la catégorie)
+  const selectedCategoryId = event.target.value;
+ 
+ 
 });
 
 
@@ -193,22 +190,25 @@ selectElement.addEventListener("change", function(event) {
 
 
 
-const galleryElement = document.querySelectorAll(".gallery")
+  const figureElements = document.querySelector(".gallery")
 
   // Quand l'utilisateur clique sur le bouton ajouter une photo, ouvre la 2eme modale
 addButton.onclick = function() {
     secondModal.style.display = "block";
     modal.style.display = "none"
+    
    
-
-
-  }
+  // figureElements.style.display = "block"
+    
+};
 
  // Quand l'utilisateur clique sur la flèche de retour, ferme la modale et ouvre la première modale
  const arrowBack = document.getElementsByClassName("arrow-left")[0];
  arrowBack.onclick = function () {
      secondModal.style.display = "none";
      modal.style.display = "block"
+  
+   
 
 
 // Récupérer tous les éléments avec la classe "modal-work"
@@ -248,7 +248,8 @@ addPhotoButton.addEventListener("click", function(event) {
           addPhotoButton.style.display = "none"; // Cacher le bouton d'ajout de photo
           imageDescription.style.display = "none"; // Cacher le paragraphe de description
             // Supprimer le padding-top de l'image prévisualisée
-           imagePreview.style.paddingTop = "0 !important";
+          const imageInputContainer = document.querySelector(".image-input-container")
+          imageInputContainer.style.paddingTop = "0"
 
         };
     
@@ -263,53 +264,78 @@ addPhotoButton.addEventListener("click", function(event) {
 
 
 // Récupérer le formulaire
-const myForm = document.getElementsByClassName("my-form")[0]
+const myForm = document.querySelector(".my-form")
 console.log(myForm)
 
 myForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
   // Récupérer les données du formulaire
-  const imageUrl = document.getElementById("image-input").files[0]
-  const description = document.getElementById("text-input").value;
-  const categorySelect = document.getElementById("select").value;
+  const image = document.getElementById("image-input").value
+  const title = document.getElementById("text-input").value;
+  const categoryId = document.getElementById("select").value;
 
-  console.log(imageUrl)
-  console.log(description)
-  console.log(categorySelect)
+  console.log(image)
+  console.log(title)
+  console.log(categoryId)
+
+
+  // Récupérer les éléments pour le messageur d'erreur si donnée manquante
+  const errorTitle = document.getElementById("title-error");
+  const errorImage = document.getElementById("image-error");
+  const errorSelect = document.getElementById("select-error");
+
+
+  // Réinitialise les messages d'erreur
+  errorTitle.textContent = "";
+  errorImage.textContent = "";
+  errorSelect.textContent = "";
+
+  if (image === "") {
+    errorImage.textContent = "Image non sélectionnée";
+  }
+
+  if (title === "") {
+    errorTitle.textContent = "Titre non renseigné";
+  }
+
+  if (categoryId === "") {
+    errorSelect.textContent = "Catégorie non renseignée";
+  }
+
+  // Vérification finale pour savoir si des erreurs existent
+  if (image === "" || title === "" || categoryId === "") {
+    // Il y a des erreurs dans le formulaire, on ne soumet pas le formulaire
+    return;
+  }
+
+
+
 
 // Créer l'objet FormData et ajouter les champs du formulaire
 const formData = new FormData();
-formData.append("imageUrl", imageUrl);
-formData.append("description", description);
-formData.append("category", categorySelect);
+formData.append("image", image);
+formData.append("title", title);
+formData.append("category", categoryId);
 
 
   // Récupérer le token depuis le local storage
   const token = localStorage.getItem("token");
+ 
   
 
-  fetch(`http://localhost:5678/api/works`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // Ajouter le token dans l'en-tête de la requête
-    },
-    body: formData // Utiliser l'objet FormData comme corps de la requête
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: { "Authorization": `Bearer ${token}` },
+    body: formData,
   })
-  .then(response => {
-    console.log(response)
-    if (!response.ok) {
-      throw new Error('Erreur lors de l\'ajout du projet.');
-    }
-    return response.json(); // Si la réponse est valide, retourner les données JSON
-  })
-  .then(data => {
-    console.log('Projet ajouté avec succès:', data);
-    // Vous pouvez effectuer des actions supplémentaires ici si nécessaire
+    .then((response) => response.json ())
+    .then ((data) => {
+      console.log(data)
+      alert("ok")
   })
   .catch(error => {
-    console.error('Erreur:', error.message);
-    // Gérer les erreurs ici si nécessaire
+    console.error('Erreur:', error);
+   
   });
 });

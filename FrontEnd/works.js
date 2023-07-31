@@ -1,11 +1,7 @@
-
-
 // Récupération des travaux depuis l'API 
 fetch('http://localhost:5678/api/works')
     .then(reponse => reponse.json())
     .then((projects) => {
-
-
 
 
 for (let i=0; i < projects.length; i++) {

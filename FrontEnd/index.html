@@ -40,6 +40,10 @@
       <section id="introduction">
         <div class="main-img">
           <img src="./assets/images/sophie-bluel.png" alt="" />
+          <div id="edit-1">
+            <i class="fa-regular fa-pen-to-square"></i>
+            <p>Mode édition</p>
+          </div>
         </div>
         <article>
           <h2>Designer d'espace</h2>
@@ -60,10 +64,6 @@
           </p>
         </article>
       </section>
-      <div id="edit-1">
-        <i class="fa-regular fa-pen-to-square"></i>
-        <p>Mode édition</p>
-      </div>
 
       <section id="portfolio">
         <div class="edit-projects">
@@ -109,13 +109,16 @@
                   <p id="image-description">jpg, png : 4mo max</p>
                 </div>
                 <div class="form-group">
+                  <span id="image-error"></span>
+                  <span id="title-error"></span>
                   <label for="text-input">Titre</label>
                   <input id="text-input" type="text" />
                   <label for="select">Catégorie</label>
                   <select name="select" id="select"></select>
+                  <span id="select-error"></span>
                 </div>
                 <div class="spacer-2"></div>
-                <button class="submit">Valider</button>
+                <input type="submit" id="submit-modal" value="Valider" />
               </form>
             </div>
           </div>
