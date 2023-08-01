@@ -96,7 +96,10 @@ buttonFilter.forEach(button => {
       return project.category.name === categorieButton;
     });
 
-   
+// Récupérer l'élément modal :
+const secondModal = document.getElementById("secondModal");
+
+    if (secondModal.display === "none") {
    // Masquer ou afficher les projets en fonction des catégories filtrées
    const blocFigure = document.querySelectorAll("figure");
    if (categorieButton === "Tous") {
@@ -110,15 +113,14 @@ buttonFilter.forEach(button => {
          figure.style.display = "block";
        } else {
          figure.style.display = "none";
-
+        }
+      });
     }
-  })
-}})
-    })
-  })
+  }
+});
+});
 })
-
-
+    })
 
 
 /////// ******** Affichage du mode éditeur ********* ///////
@@ -172,4 +174,3 @@ function handleLoginButtonClick() {
     }}
 // Appeler la fonction pour mettre à jour le bouton de connexion lors du chargement initial de la page
 window.addEventListener("DOMContentLoaded", updateLoginButton);
-  

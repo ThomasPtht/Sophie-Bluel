@@ -30,6 +30,7 @@ function handleFormSubmit(event) {
             return response.json();
         } else {
             throw new Error('Erreur dans l’identifiant ou le mot de passe');
+        
         }
     })
     .then(data => {

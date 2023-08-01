@@ -131,10 +131,51 @@ const addButton = document.getElementsByClassName("add-button")[0];
 // Récupérer le span qui ferme la modale : 
 const close = document.getElementsByClassName("close-modal")[0];
 
+// Récupérer l'icone par défaut
+const defaultImageSource = "./assets/icons/picture-svgrepo-com 1.svg";
+
+
+
+// Fonction pour cacher l'aperçu de l'image et réinitialiser l'input file
+function hideImagePreview() {
+  imagePreview.src = defaultImageSource; // Cacher l'aperçu de l'image
+  addPhotoButton.style.display = "block"; // Afficher le bouton d'ajout de photo
+  imageDescription.style.display = "block"; // Afficher le paragraphe de description
+  imageInput.value = ""; // Réinitialiser l'input file en vidant sa valeur
+  const textInput = document.getElementById("text-input") //Réinitialiser l'input du titre
+  textInput.value = "";
+  const select = document.getElementById("select")
+  select.value = "";
+  const imageInputContainer = document.querySelector(".image-input-container");
+  imageInputContainer.style.paddingTop = "30px"; // Remettre le padding-top par défaut
+}
+
+
+  // Récupérer les éléments pour le messageur d'erreur si donnée manquante
+  
+  const errorTitle = document.getElementById("title-error");
+  const errorImage = document.getElementById("image-error");
+  const errorSelect = document.getElementById("select-error");
+
+  function resetErrorMessages() {
+ 
+    errorTitle.textContent = "";
+    errorImage.textContent = "";
+    errorSelect.textContent = "";
+    }
+  
+
+
+
+
+
 // Quand l'utilisateur clique à l'extérieur de la seconde modale, ferme la seconde modale
 window.addEventListener('click', function(event) {
   if (event.target === secondModal) {
     secondModal.style.display = "none";
+    imagePreview.style.display = "block"
+    hideImagePreview();
+    resetErrorMessages();
   }
 });
 
@@ -177,49 +218,41 @@ selectElement.appendChild(optionElement);
 selectElement.addEventListener("change", function(event) {
  // Récupérer la valeur sélectionnée (ID de la catégorie)
   const selectedCategoryId = event.target.value;
- 
- 
 });
+
+
+
+
 
 
   // Quand l'utilisateur clique sur <span> (x), ferme la modale
   const closeModal = document.getElementsByClassName("close-modal")[0];
   closeModal.onclick = function() {
     secondModal.style.display = "none";
+    hideImagePreview();
+    resetErrorMessages();
   };
 
 
-
-  const figureElements = document.querySelector(".gallery")
 
   // Quand l'utilisateur clique sur le bouton ajouter une photo, ouvre la 2eme modale
 addButton.onclick = function() {
     secondModal.style.display = "block";
     modal.style.display = "none"
-    
-   
-  // figureElements.style.display = "block"
-    
-};
+
+}
+
 
  // Quand l'utilisateur clique sur la flèche de retour, ferme la modale et ouvre la première modale
  const arrowBack = document.getElementsByClassName("arrow-left")[0];
  arrowBack.onclick = function () {
      secondModal.style.display = "none";
      modal.style.display = "block"
-  
-   
+     hideImagePreview();
+     resetErrorMessages();
 
 
-// Récupérer tous les éléments avec la classe "modal-work"
-const modalWorkElements = document.querySelectorAll(".modal-work");
-
-// Parcourir tous les éléments et les mettre en "display: block"
-modalWorkElements.forEach(element => {
-  element.style.display = "block";
-});
-
- }
+}
 
 
 //  Récupérer le bouton d'ajout de photo et l'input file
@@ -265,13 +298,12 @@ addPhotoButton.addEventListener("click", function(event) {
 
 // Récupérer le formulaire
 const myForm = document.querySelector(".my-form")
-console.log(myForm)
 
 myForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
   // Récupérer les données du formulaire
-  const image = document.getElementById("image-input").value
+  const image = document.getElementById("image-input").files[0]
   const title = document.getElementById("text-input").value;
   const categoryId = document.getElementById("select").value;
 
@@ -279,36 +311,29 @@ myForm.addEventListener("submit", function(event) {
   console.log(title)
   console.log(categoryId)
 
-
-  // Récupérer les éléments pour le messageur d'erreur si donnée manquante
-  const errorTitle = document.getElementById("title-error");
-  const errorImage = document.getElementById("image-error");
-  const errorSelect = document.getElementById("select-error");
-
-
-  // Réinitialise les messages d'erreur
-  errorTitle.textContent = "";
-  errorImage.textContent = "";
-  errorSelect.textContent = "";
-
-  if (image === "") {
+  const messageImageError = document.getElementById("image-input").value
+// Messages d'erreurs dans le formulaire
+  if (messageImageError == "") {
     errorImage.textContent = "Image non sélectionnée";
+  } else {
+    errorImage.textContent = "";
   }
-
   if (title === "") {
     errorTitle.textContent = "Titre non renseigné";
+  } else {
+    errorTitle.textContent = "";
   }
 
   if (categoryId === "") {
     errorSelect.textContent = "Catégorie non renseignée";
+  } else {
+    errorSelect.textContent = "";
   }
-
   // Vérification finale pour savoir si des erreurs existent
   if (image === "" || title === "" || categoryId === "") {
     // Il y a des erreurs dans le formulaire, on ne soumet pas le formulaire
     return;
   }
-
 
 
 
@@ -331,8 +356,6 @@ formData.append("category", categoryId);
   })
     .then((response) => response.json ())
     .then ((data) => {
-      console.log(data)
-      alert("ok")
   })
   .catch(error => {
     console.error('Erreur:', error);
