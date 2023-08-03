@@ -715,3 +715,7 @@ select {
   text-align: center;
   padding-top: 10px;
 }
+
+#secondModal {
+  display: none;
+}

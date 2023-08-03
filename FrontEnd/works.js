@@ -99,7 +99,7 @@ buttonFilter.forEach(button => {
 // Récupérer l'élément modal :
 const secondModal = document.getElementById("secondModal");
 
-    if (secondModal.display === "none") {
+    if (secondModal.style.display === "none") {
    // Masquer ou afficher les projets en fonction des catégories filtrées
    const blocFigure = document.querySelectorAll("figure");
    if (categorieButton === "Tous") {

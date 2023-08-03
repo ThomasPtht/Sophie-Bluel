@@ -124,6 +124,7 @@ btn.onclick = function() {
 
 // Récupérer la modale : 
 const secondModal = document.getElementById("secondModal");
+secondModal.style.display = "none"
 
 // Récupérer le bouton qui ouvre la modale :
 const addButton = document.getElementsByClassName("add-button")[0];
