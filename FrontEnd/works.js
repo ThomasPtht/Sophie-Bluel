@@ -76,8 +76,6 @@ buttonContainer.appendChild(btnFilterAppartments);
 buttonContainer.appendChild(btnFilterRestaurants);
 
 
-// Déclarer le texte du bouton en tant que catégorie bouton
-const categorieButton = [btnFilterAll.textContent, btnFilterObjects.textContent, btnFilterAppartments.textContent, btnFilterRestaurants.textContent];
 
 
 // Déclaration d'éléments
